@@ -247,7 +247,7 @@ import { MaterialType, MaterialCategory, MaterialUnit } from '../../core/models/
         <mat-tab label="Especificaciones Técnicas">
           <div class="tab-content">
             <div class="specifications-table-container">
-              <table mat-table [dataSource]="materialTypeService.allMaterialTypes()" class="specifications-table">
+              <table class="specifications-table">
                 <!-- Code Column -->
                 <ng-container matColumnDef="code">
                   <th mat-header-cell *matHeaderCellDef>Código</th>

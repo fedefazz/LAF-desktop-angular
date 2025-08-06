@@ -207,7 +207,7 @@ import { Product, ProductStatus } from '../../core/models/laf-business.model';
             </div>
           } @else {
             <div class="table-container">
-              <table mat-table [dataSource]="filteredProducts()" class="products-table" matSort>
+              <table class="products-table">
                 
                 <!-- Code Column -->
                 <ng-container matColumnDef="code">

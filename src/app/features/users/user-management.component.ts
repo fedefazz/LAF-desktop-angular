@@ -76,7 +76,7 @@ import { MatChipsModule } from '@angular/material/chips';
           
           <mat-card-content>
             <div class="table-container">
-              <table mat-table class="users-table">
+              <table class="users-table">
                 <thead>
                   <tr>
                     <th>Usuario</th>

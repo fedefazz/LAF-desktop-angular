@@ -34,7 +34,7 @@ export class SidebarComponent {
   private readonly router = inject(Router);
 
   // Signals
-  readonly expandedItems = signal<Set<string>>(new Set());
+  readonly expandedItems = signal<Set<string>>(new Set(['scrap-manager', 'empaque', 'equipamiento', 'personal', 'productos'])); // Expanded by default
 
   // Computed properties
   readonly isOpen = this.navigationService.isSidebarOpen;
@@ -46,7 +46,7 @@ export class SidebarComponent {
     if (item.children && item.children.length > 0) {
       this.toggleExpansion(item.id);
     } else if (item.route) {
-      this.navigationService.navigateTo(item.route);
+      this.navigationService.navigateToItem(item);
     }
   }
 
@@ -85,5 +85,9 @@ export class SidebarComponent {
 
   closeSidebar(): void {
     this.navigationService.closeSidebar();
+  }
+
+  toggleSidebar(): void {
+    this.navigationService.toggleSidebar();
   }
 }

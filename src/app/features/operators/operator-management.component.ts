@@ -207,7 +207,7 @@ import { Operator, OperatorStatus } from '../../core/models/laf-business.model';
             </div>
           } @else {
             <div class="table-container">
-              <table mat-table [dataSource]="filteredOperators()" class="operators-table" matSort>
+              <table class="operators-table">
                 
                 <!-- Employee Number Column -->
                 <ng-container matColumnDef="employeeNumber">

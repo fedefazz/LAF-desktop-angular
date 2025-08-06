@@ -78,7 +78,7 @@ import { MachineService } from '../../core/services/machine-api.service';
 
           <!-- Machines Table -->
           <div class="table-container">
-            <table mat-table [dataSource]="machines()" class="machines-table">
+            <table class="machines-table">
               <!-- ID Column -->
               <ng-container matColumnDef="id">
                 <th mat-header-cell *matHeaderCellDef>ID</th>
