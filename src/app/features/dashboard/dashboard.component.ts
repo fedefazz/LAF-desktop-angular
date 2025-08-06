@@ -214,14 +214,71 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
 
           <!-- Gráfico 2: Área Laminación -->
           <div class="chart-section-full">
-            <h4 class="chart-title">Área Laminación</h4>
-            <p class="chart-subtitle">Incidencias de los últimos 12 meses</p>
-            <div class="chart-container-full">
-              <app-chart 
-                [chartData]="laminacionTimelineData"
-                [options]="timelineChartOptions"
-                chartType="line">
-              </app-chart>
+            <div class="chart-container-dual">
+              <div class="chart-left">
+                <h4 class="chart-title">Área Laminación</h4>
+                <p class="chart-subtitle">Incidencias de los últimos 12 meses</p>
+                <div class="chart-content">
+                  <app-chart 
+                    [chartData]="laminacionTimelineData"
+                    [options]="laminacionChartOptionsFormatted"
+                    chartType="line">
+                  </app-chart>
+                </div>
+              </div>
+              <!-- Separador visual -->
+              <div class="chart-separator"></div>
+              <div class="chart-right">
+                <p class="chart-subtitle-right">Incidencias de los últimos 12 meses</p>
+                
+                <!-- Totales -->
+                <div class="laminacion-totals">
+                  <div class="totals-container" style="display: flex; gap: 25px; margin-bottom: 8px; font-size: 1em;">
+                    <div>
+                      <div class="total-value" style="font-size: 1.0em; color: #ffffff; font-weight: 600;">{{ laminacionTotalScrap | argentinianNumber }}</div>
+                      <div class="total-label" style="font-size: 0.65em; color: #ffffff;">kilos de Scrap</div>
+                    </div>
+                    <div>
+                      <div class="total-value" style="font-size: 1.0em; color: #ffffff; font-weight: 600;">{{ laminacionTotalProduccion | argentinianNumber }}</div>
+                      <div class="total-label" style="font-size: 0.65em; color: #ffffff;">kilos Producidos</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Doughnut chart más grande con leyenda central -->
+                <div style="width: 180px; height: 180px; margin: 0 auto 8px auto; position: relative;">
+                  <app-chart 
+                    [chartData]="laminacionDoughnutData"
+                    [options]="laminacionDoughnutChartOptionsFormatted"
+                    chartType="doughnut">
+                  </app-chart>
+                  <!-- Leyenda central sobre el doughnut -->
+                  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; pointer-events: none;">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 4px;">
+                      <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:{{laminacionLegend[laminacionActiveIndex]?.color || '#fff'}};"></span>
+                      <div style="font-size: 0.9em; color: #fff; font-weight: 600;">{{ laminacionLegend[laminacionActiveIndex]?.label || '' }}</div>
+                    </div>
+                    <div style="font-size: 0.8em; color: #fff; margin-top: 2px;">{{ getActivePorcentajeLaminacionFormatted() }}%</div>
+                  </div>
+                </div>
+                
+                <!-- Leyenda compacta -->
+                <div class="laminacion-legend" style="font-size: 0.8em; width: 100%;">
+                  <div style="padding: 0;">
+                    <div style="color: #999; font-size: 0.7em; margin-bottom: 6px;">Scrap / Producidos</div>
+                    <div style="display: flex; flex-direction: column; gap: 2px;">
+                      <div *ngFor="let item of laminacionLegend" style="display: flex; align-items: center; gap: 8px; font-size: 0.85em;">
+                        <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:{{item.color}};"></span>
+                        <span style="color:#fff;">{{ item.scrap | argentinianNumber }}</span>
+                        <span style="color:#666;">|</span>
+                        <span style="color:#fff;">{{ item.produccion | argentinianNumber }} kg</span>
+                        <span style="color:#666;">|</span>
+                        <span style="color:{{item.color}};">{{ item.label }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -426,6 +483,11 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
       margin-bottom: 8px;
     }
 
+    .laminacion-totals {
+      width: 100%;
+      margin-bottom: 8px;
+    }
+
     /* Responsive design */
     @media (min-width: 1281px) {
       .impresion-legend {
@@ -442,6 +504,23 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
         font-size: 1.1em !important;
       }
       .impresion-totals .total-label {
+        font-size: 0.75em !important;
+      }
+
+      .laminacion-legend {
+        font-size: 0.9em !important;
+      }
+      .laminacion-legend div[style*="font-size: 0.7em"] {
+        font-size: 0.8em !important;
+      }
+      .laminacion-legend div[style*="font-size: 0.85em"] {
+        font-size: 0.95em !important;
+      }
+      
+      .laminacion-totals .total-value {
+        font-size: 1.1em !important;
+      }
+      .laminacion-totals .total-label {
         font-size: 0.75em !important;
       }
     }
@@ -661,6 +740,80 @@ export class DashboardComponent implements OnInit {
     ...this.doughnutChartOptions
   };
 
+  // Formatted chart options for Laminación (igual que impresión)
+  public readonly laminacionChartOptionsFormatted = {
+    ...this.timelineChartOptions,
+    plugins: {
+      ...this.timelineChartOptions.plugins,
+      tooltip: {
+        ...this.timelineChartOptions.plugins.tooltip,
+        callbacks: {
+          label: (ctx: any) => {
+            const value = ctx.parsed.y;
+            // Mostrar el valor tal como viene del API, sin formatear
+            return `${ctx.dataset.label}: ${value}`;
+          }
+        }
+      }
+    },
+    scales: {
+      ...this.timelineChartOptions.scales,
+      x: {
+        ...this.timelineChartOptions.scales.x,
+        ticks: { 
+          color: 'rgba(255,255,255,0.6)', 
+          font: { size: 11 },
+          callback: (value: any, index: any, values: any) => {
+            const label = this.laminacionTimelineData.labels?.[index];
+            return this.formatMonthLabelForDisplay(label as string);
+          }
+        }
+      }
+    }
+  };
+
+  // Doughnut chart options para laminación (similar a impresión)
+  public readonly laminacionDoughnutChartOptionsFormatted = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false  // Ocultamos la leyenda porque tenemos una personalizada
+      },
+      tooltip: {
+        enabled: false  // Deshabilitamos el tooltip por defecto para usar uno personalizado en el centro
+      }
+    },
+    cutout: '75%',  // Agujero más grande para mostrar la leyenda central
+    elements: {
+      arc: {
+        borderWidth: 1,  // Líneas más finas
+        borderColor: 'rgba(255, 255, 255, 0.1)',  // Borde sutil
+        hoverBorderWidth: 2,  // Ligeramente más grueso al hacer hover
+        hoverBorderColor: 'rgba(255, 255, 255, 0.3)'
+      }
+    },
+    interaction: {
+      intersect: false,
+      mode: 'point' as const
+    },
+    animation: {
+      animateRotate: true,
+      animateScale: true,
+      duration: 1000,
+      easing: 'easeOutQuart' as const
+    },
+    onHover: (event: any, elements: any[]) => {
+      if (elements.length > 0) {
+        // Cambiar el índice activo para mostrar en el centro
+        this.laminacionActiveIndex = elements[0].index;
+        event.native.target.style.cursor = 'pointer';
+      } else {
+        event.native.target.style.cursor = 'default';
+      }
+    }
+  };
+
   // Helper for Argentinian number formatting (consistente con el pipe)
   private formatArgentinian(value: number): string {
     if (typeof value !== 'number' || isNaN(value)) return '0';
@@ -749,6 +902,13 @@ export class DashboardComponent implements OnInit {
   public impresionTotalProduccion: number = 0;
   public impresionLegend: any[] = [];
   public impresionActiveIndex: number = 0; // Para la leyenda activa
+
+  // Totals and legend for Laminación - igual que impresión
+  public laminacionTotalScrap: number = 0;
+  public laminacionTotalProduccion: number = 0;
+  public laminacionLegend: any[] = [];
+  public laminacionActiveIndex: number = 0; // Para la leyenda activa
+  
   private dashboardService = inject(DashboardService);
   private cdr = inject(ChangeDetectorRef);
 
@@ -761,6 +921,7 @@ export class DashboardComponent implements OnInit {
   public impresionTimelineData: ChartData = { labels: [], datasets: [] };
   public impresionDoughnutData: ChartData = { labels: [], datasets: [] };
   public laminacionTimelineData: ChartData = { labels: [], datasets: [] };
+  public laminacionDoughnutData: ChartData = { labels: [], datasets: [] };
   public totalScrapData: ChartData = { labels: [], datasets: [] };
   public monthlyScrapData: ChartData = { labels: [], datasets: [] };
 
@@ -823,6 +984,18 @@ export class DashboardComponent implements OnInit {
     return this.formatArgentinian(Number(activeValue));
   }
 
+  // Método para obtener el porcentaje formateado del elemento activo de laminación
+  public getActivePorcentajeLaminacionFormatted(): string {
+    if (!this.laminacionDoughnutData?.datasets?.[0]?.data) {
+      return '0,00';
+    }
+    const activeValue = this.laminacionDoughnutData.datasets[0].data[this.laminacionActiveIndex];
+    if (activeValue === undefined || activeValue === null) {
+      return '0,00';
+    }
+    return this.formatArgentinian(Number(activeValue));
+  }
+
   // ...existing code...
 
   ngOnInit(): void {
@@ -875,6 +1048,10 @@ export class DashboardComponent implements OnInit {
     // IMPRESIÓN: Usar datos reales del API
     const totalImpresion = (stats as any)?.raw?.totalImpresion;
     const impresionDetalle = (stats as any)?.raw?.impresionDetalleRaw;
+
+    // LAMINACIÓN: Usar datos reales del API (getTotalLaminacion y getLaminacionDetalle)
+    const totalLaminacion = (stats as any)?.raw?.getTotalLaminacion;
+    const laminacionDetalle = (stats as any)?.raw?.getLaminacionDetalle;
 
     if (totalImpresion) {
       // Actualizar totales de impresión
@@ -967,35 +1144,81 @@ export class DashboardComponent implements OnInit {
       };
     }
 
-    // Otros gráficos con datos estáticos por ahora
-    this.laminacionTimelineData = {
-      labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-      datasets: [{
-        label: 'Laminación',
-        data: [5, 10, 8, 12, 15, 10],
-        borderColor: 'rgba(255, 193, 7, 1)',
-        backgroundColor: 'rgba(255, 193, 7, 0.1)'
-      }]
-    };
+    // LAMINACIÓN: Procesar datos del API usando getTotalLaminacion y getLaminacionDetalle
+    if (totalLaminacion) {
+      // Actualizar totales de laminación
+      this.laminacionTotalScrap = totalLaminacion.totalScrap ?? 0;
+      this.laminacionTotalProduccion = totalLaminacion.totalProducidos ?? 0;
+      
+      // Actualizar leyenda de laminación usando listadodetallemaquina
+      if (totalLaminacion.listadodetallemaquina && Array.isArray(totalLaminacion.listadodetallemaquina)) {
+        // Colores para las diferentes laminadoras
+        const laminadoraColors = [
+          'rgba(220, 53, 69, 1)',   // Rojo
+          'rgba(13, 110, 253, 1)',  // Azul
+          'rgba(255, 193, 7, 1)',   // Amarillo
+          'rgba(25, 135, 84, 1)'    // Verde
+        ];
 
-    this.totalScrapData = {
-      labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-      datasets: [{
-        label: 'Scrap Total',
-        data: [1500, 1800, 1400, 2000, 2800, 1300],
-        borderColor: 'rgba(220, 53, 69, 1)',
-        backgroundColor: 'rgba(220, 53, 69, 0.2)'
-      }]
-    };
+        this.laminacionLegend = totalLaminacion.listadodetallemaquina.map((item: any, index: number) => ({
+          label: item.nombre?.replace('LAM LAMINA ', 'Lam ') ?? `Lam ${index + 2}`,
+          scrap: item.scrap ?? 0,
+          produccion: item.produccion ?? 0,
+          color: laminadoraColors[index % laminadoraColors.length],
+          total: (item.scrap ?? 0) + (item.produccion ?? 0)
+        }));
 
-    this.monthlyScrapData = {
-      labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
-      datasets: [{
-        label: 'Scrap %',
-        data: [8, 7, 6, 12, 18, 5],
-        borderColor: 'rgba(255, 193, 7, 1)',
-        backgroundColor: 'rgba(255, 193, 7, 0.2)'
-      }]
-    };
+        // Encontrar el índice del elemento con mayor total y establecerlo como activo
+        const maxIndex = this.laminacionLegend.reduce((maxIdx, item, idx, arr) => 
+          item.total > arr[maxIdx].total ? idx : maxIdx, 0);
+        this.laminacionActiveIndex = maxIndex;
+
+        // Doughnut chart con datos reales de incidencia
+        this.laminacionDoughnutData = {
+          labels: this.laminacionLegend.map(item => item.label),
+          datasets: [{
+            label: 'Incidencia por máquina',
+            data: totalLaminacion.listadodetallemaquina.map((item: any) => item.incidencia || 0),
+            backgroundColor: laminadoraColors.slice(0, totalLaminacion.listadodetallemaquina.length)
+          }]
+        };
+      }
+    }
+
+    // Timeline chart de laminación usando getLaminacionDetalle
+    if (laminacionDetalle && Array.isArray(laminacionDetalle)) {
+      this.laminacionTimelineData = {
+        labels: laminacionDetalle.map(d => this.formatMonthLabel(d.DTPRODUCAO)), // Usar el mismo formato que impresión
+        datasets: [
+          this.createDatasetWithPointColors(
+            'Lam 2',
+            laminacionDetalle.map(d => d.LAMINADORA_2 || 0),
+            'rgba(220, 53, 69, 1)',
+            'rgba(220, 53, 69, 0.2)'
+          ),
+          this.createDatasetWithPointColors(
+            'Lam 3',
+            laminacionDetalle.map(d => d.LAMINADORA_3 || 0),
+            'rgba(13, 110, 253, 1)',
+            'rgba(13, 110, 253, 0.2)'
+          ),
+          this.createDatasetWithPointColors(
+            'Lam 4',
+            laminacionDetalle.map(d => d.LAMINADORA_4 || 0),
+            'rgba(255, 193, 7, 1)',
+            'rgba(255, 193, 7, 0.2)'
+          ),
+          this.createDatasetWithPointColors(
+            'Lam 5',
+            laminacionDetalle.map(d => d.LAMINADORA_5 || 0),
+            'rgba(25, 135, 84, 1)',
+            'rgba(25, 135, 84, 0.2)'
+          )
+        ]
+      };
+    }
+
+    // Otros gráficos con datos reales del API (no datos estáticos)
+    // totalScrapData y monthlyScrapData se poblarán con datos reales cuando estén disponibles
   }
 }

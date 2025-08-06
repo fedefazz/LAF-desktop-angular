@@ -336,7 +336,9 @@ export class DashboardService extends ApiService {
           },
           raw: {
             totalImpresion: totalImpresion || undefined,
-            impresionDetalleRaw: impresionDetalle || undefined
+            impresionDetalleRaw: impresionDetalle || undefined,
+            getTotalLaminacion: totalLaminacion || undefined,
+            getLaminacionDetalle: laminacionDetalle || undefined
           }
         };
 
