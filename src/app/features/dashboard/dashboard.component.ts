@@ -47,21 +47,18 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
         <!-- KPIs en grilla 3x3 -->
         <div class="dashboard-kpis-grid">
           
-          @if (loadingStates.kpis) {
-            <!-- Skeleton para KPIs -->
-            @for (i of [1,2,3,4,5,6,7,8,9]; track i) {
-              <div class="kpi-card skeleton">
-                <div class="kpi-icon skeleton-icon"></div>
-                <div class="kpi-content">
-                  <div class="skeleton-line skeleton-title"></div>
-                  <div class="skeleton-line skeleton-subtitle"></div>
-                  <div class="skeleton-line skeleton-value"></div>
-                </div>
+          <!-- Fila 1 - Totales Generales -->
+          <!-- KPI 1: Porcentaje Total Planta -->
+          @if (kpiLoadingStates.totalPlanta) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
               </div>
-            }
+            </div>
           } @else {
-            <!-- KPIs reales -->
-            <!-- Fila 1 - Totales Generales -->
             <div class="kpi-card kpi-general">
               <div class="kpi-icon kpi-icon-general">
                 <div class="icon-bg icon-bg-percentage">
@@ -74,7 +71,19 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
                 <div class="kpi-value">{{ getTotalPlantaPorcentaje() | number:'1.1-1' }}%</div>
               </div>
             </div>
+          }
 
+          <!-- KPI 2: Scrap Total Planta -->
+          @if (kpiLoadingStates.totalPlanta) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
+              </div>
+            </div>
+          } @else {
             <div class="kpi-card kpi-general">
               <div class="kpi-icon kpi-icon-general">
                 <div class="icon-bg icon-bg-scrap">
@@ -87,7 +96,19 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
                 <div class="kpi-value">{{ getTotalPlantaScrapKgs() | number:'1.0-0' }} Kg.</div>
               </div>
             </div>
+          }
 
+          <!-- KPI 3: Producidos Total Planta -->
+          @if (kpiLoadingStates.totalPlanta) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
+              </div>
+            </div>
+          } @else {
             <div class="kpi-card kpi-general">
               <div class="kpi-icon kpi-icon-general">
                 <div class="icon-bg icon-bg-production">
@@ -100,8 +121,22 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
                 <div class="kpi-value">{{ getTotalPlantaProduccionKgs() | number:'1.0-0' }} Kg.</div>
               </div>
             </div>
+          }
 
-            <!-- Fila 2 - Áreas Específicas -->
+          <!-- Fila 2 - Áreas Específicas -->
+          <!-- KPI 4: Impresoras -->
+          @if (kpiLoadingStates.impresionArea) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+              </div>
+            </div>
+          } @else {
             <div class="kpi-card kpi-area">
               <div class="kpi-icon kpi-icon-area">
                 <div class="icon-bg icon-bg-impresion">
@@ -122,7 +157,21 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
                 </div>
               </div>
             </div>
+          }
 
+          <!-- KPI 5: Corte -->
+          @if (kpiLoadingStates.corteArea) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+              </div>
+            </div>
+          } @else {
             <div class="kpi-card kpi-area">
               <div class="kpi-icon kpi-icon-area">
                 <div class="icon-bg icon-bg-corte">
@@ -143,7 +192,21 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
                 </div>
               </div>
             </div>
+          }
 
+          <!-- KPI 6: Mangas -->
+          @if (kpiLoadingStates.mangasArea) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+              </div>
+            </div>
+          } @else {
             <div class="kpi-card kpi-area">
               <div class="kpi-icon kpi-icon-area">
                 <div class="icon-bg icon-bg-mangas">
@@ -164,8 +227,22 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
                 </div>
               </div>
             </div>
+          }
 
-            <!-- Fila 3 - Áreas Específicas -->
+          <!-- Fila 3 - Áreas Específicas -->
+          <!-- KPI 7: Doypacks -->
+          @if (kpiLoadingStates.doypackArea) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+              </div>
+            </div>
+          } @else {
             <div class="kpi-card kpi-area">
               <div class="kpi-icon kpi-icon-area">
                 <div class="icon-bg icon-bg-doypack">
@@ -186,7 +263,21 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
                 </div>
               </div>
             </div>
+          }
 
+          <!-- KPI 8: Tabaco -->
+          @if (kpiLoadingStates.tabacoArea) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+              </div>
+            </div>
+          } @else {
             <div class="kpi-card kpi-area">
               <div class="kpi-icon kpi-icon-area">
                 <div class="icon-bg icon-bg-tabaco">
@@ -207,7 +298,21 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
                 </div>
               </div>
             </div>
+          }
 
+          <!-- KPI 9: Laminado -->
+          @if (kpiLoadingStates.laminadoArea) {
+            <div class="kpi-card skeleton">
+              <div class="kpi-icon skeleton-icon"></div>
+              <div class="kpi-content">
+                <div class="skeleton-line skeleton-title"></div>
+                <div class="skeleton-line skeleton-subtitle"></div>
+                <div class="skeleton-line skeleton-value"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+                <div class="skeleton-line skeleton-detail"></div>
+              </div>
+            </div>
+          } @else {
             <div class="kpi-card kpi-area">
               <div class="kpi-icon kpi-icon-area">
                 <div class="icon-bg icon-bg-laminado">
@@ -876,6 +981,11 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
       height: 24px;
     }
 
+    .skeleton-detail {
+      width: 70%;
+      height: 12px;
+    }
+
     .skeleton-icon {
       width: 40px;
       height: 40px;
@@ -1390,6 +1500,18 @@ export class DashboardComponent implements OnInit {
     totalScrap: true
   };
 
+  // Estados de carga individuales para KPIs
+  public kpiLoadingStates = {
+    totalPlanta: true,
+    totalPlantaCerradas: true,
+    impresionArea: true,
+    corteArea: true,
+    mangasArea: true,
+    doypackArea: true,
+    tabacoArea: true,
+    laminadoArea: true
+  };
+
   // Chart data properties - calculadas una vez
   public impresionTimelineData: ChartData = { labels: [], datasets: [] };
   public impresionDoughnutData: ChartData = { labels: [], datasets: [] };
@@ -1406,7 +1528,14 @@ export class DashboardComponent implements OnInit {
   private _totalPlantaPorcentaje: number = 0;
   private _totalPlantaScrapKgs: number = 0;
   private _totalPlantaProduccionKgs: number = 0;
-  private _areaData: any = {};
+  private _areaData: any = {
+    impresion: { porcentaje: 0, scrapKgs: 0, produccionKgs: 0 },
+    corte: { porcentaje: 0, scrapKgs: 0, produccionKgs: 0 },
+    mangas: { porcentaje: 0, scrapKgs: 0, produccionKgs: 0 },
+    doypack: { porcentaje: 0, scrapKgs: 0, produccionKgs: 0 },
+    tabaco: { porcentaje: 0, scrapKgs: 0, produccionKgs: 0 },
+    laminado: { porcentaje: 0, scrapKgs: 0, produccionKgs: 0 }
+  };
 
   public getTotalPlantaPorcentaje(): number { return this._totalPlantaPorcentaje; }
   public getTotalPlantaScrapKgs(): number { return this._totalPlantaScrapKgs; }
@@ -1491,6 +1620,18 @@ export class DashboardComponent implements OnInit {
       monthlyScrap: true,
       totalScrap: true
     };
+
+    // Resetear estados de carga individuales para KPIs
+    this.kpiLoadingStates = {
+      totalPlanta: true,
+      totalPlantaCerradas: true,
+      impresionArea: true,
+      corteArea: true,
+      mangasArea: true,
+      doypackArea: true,
+      tabacoArea: true,
+      laminadoArea: true
+    };
     
     this.cdr.markForCheck();
 
@@ -1500,8 +1641,14 @@ export class DashboardComponent implements OnInit {
 
   private async loadProgressiveData(): Promise<void> {
     try {
-      // Cargar KPIs primero (generalmente más rápido)
-      this.loadKPIData();
+      // Cargar KPIs individualmente (cada uno se muestra tan pronto como termine)
+      this.loadTotalPlantaData();
+      this.loadImpresionAreaData();
+      this.loadCorteAreaData();
+      this.loadMangasAreaData();
+      this.loadDoypackAreaData();
+      this.loadTabacoAreaData();
+      this.loadLaminadoAreaData();
       
       // Cargar gráficos en paralelo
       this.loadImpresionData();
@@ -1521,38 +1668,154 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  private async loadKPIData(): Promise<void> {
+  // Cargar datos de Total Planta (KPIs 1, 2, 3)
+  private async loadTotalPlantaData(): Promise<void> {
     try {
-      const [totalPlanta, totalPlantaCerradas, ...areas] = await Promise.all([
-        this.dashboardService.getTotalPlanta().toPromise(),
-        this.dashboardService.getTotalPlantaCerradas().toPromise(),
-        this.dashboardService.getTotalAreas(1).toPromise(), // Impresión
-        this.dashboardService.getTotalAreas(2).toPromise(), // Corte
-        this.dashboardService.getTotalAreas(3).toPromise(), // Mangas
-        this.dashboardService.getTotalAreas(4).toPromise(), // Doypack
-        this.dashboardService.getTotalAreas(5).toPromise(), // Tabaco
-        this.dashboardService.getTotalAreas(6).toPromise(), // Laminado
-      ]);
-
-      // Actualizar KPIs
-      this._totalPlantaPorcentaje = totalPlanta?.PORCENTAJE || 0;
-      this._totalPlantaScrapKgs = totalPlanta?.SCRAP_KGS || 0;
-      this._totalPlantaProduccionKgs = totalPlanta?.PRODUCCION_KGS || 0;
+      const totalPlanta = await this.dashboardService.getTotalPlanta().toPromise();
       
-      this._areaData = {
-        impresion: { porcentaje: areas[0]?.PORCENTAJE || 0, scrapKgs: areas[0]?.SCRAP_KGS || 0, produccionKgs: areas[0]?.PRODUCCION_KGS || 0 },
-        corte: { porcentaje: areas[1]?.PORCENTAJE || 0, scrapKgs: areas[1]?.SCRAP_KGS || 0, produccionKgs: areas[1]?.PRODUCCION_KGS || 0 },
-        mangas: { porcentaje: areas[2]?.PORCENTAJE || 0, scrapKgs: areas[2]?.SCRAP_KGS || 0, produccionKgs: areas[2]?.PRODUCCION_KGS || 0 },
-        doypack: { porcentaje: areas[3]?.PORCENTAJE || 0, scrapKgs: areas[3]?.SCRAP_KGS || 0, produccionKgs: areas[3]?.PRODUCCION_KGS || 0 },
-        tabaco: { porcentaje: areas[4]?.PORCENTAJE || 0, scrapKgs: areas[4]?.SCRAP_KGS || 0, produccionKgs: areas[4]?.PRODUCCION_KGS || 0 },
-        laminado: { porcentaje: areas[5]?.PORCENTAJE || 0, scrapKgs: areas[5]?.SCRAP_KGS || 0, produccionKgs: areas[5]?.PRODUCCION_KGS || 0 }
-      };
+      if (totalPlanta) {
+        this._totalPlantaPorcentaje = totalPlanta.PORCENTAJE || 0;
+        this._totalPlantaScrapKgs = totalPlanta.SCRAP_KGS || 0;
+        this._totalPlantaProduccionKgs = totalPlanta.PRODUCCION_KGS || 0;
+      }
 
-      this.loadingStates.kpis = false;
+      this.kpiLoadingStates.totalPlanta = false;
       this.cdr.markForCheck();
     } catch (error) {
-      console.error('Error loading KPI data:', error);
-      this.loadingStates.kpis = false;
+      console.error('Error loading total planta data:', error);
+      this.kpiLoadingStates.totalPlanta = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  // Cargar datos de Área Impresión (KPI 4)
+  private async loadImpresionAreaData(): Promise<void> {
+    try {
+      const areaData = await this.dashboardService.getTotalAreas(1).toPromise();
+      
+      if (areaData) {
+        this._areaData.impresion = { 
+          porcentaje: areaData.PORCENTAJE || 0, 
+          scrapKgs: areaData.SCRAP_KGS || 0, 
+          produccionKgs: areaData.PRODUCCION_KGS || 0 
+        };
+      }
+
+      this.kpiLoadingStates.impresionArea = false;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading impresion area data:', error);
+      this.kpiLoadingStates.impresionArea = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  // Cargar datos de Área Corte (KPI 5)
+  private async loadCorteAreaData(): Promise<void> {
+    try {
+      const areaData = await this.dashboardService.getTotalAreas(2).toPromise();
+      
+      if (areaData) {
+        this._areaData.corte = { 
+          porcentaje: areaData.PORCENTAJE || 0, 
+          scrapKgs: areaData.SCRAP_KGS || 0, 
+          produccionKgs: areaData.PRODUCCION_KGS || 0 
+        };
+      }
+
+      this.kpiLoadingStates.corteArea = false;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading corte area data:', error);
+      this.kpiLoadingStates.corteArea = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  // Cargar datos de Área Mangas (KPI 6)
+  private async loadMangasAreaData(): Promise<void> {
+    try {
+      const areaData = await this.dashboardService.getTotalAreas(3).toPromise();
+      
+      if (areaData) {
+        this._areaData.mangas = { 
+          porcentaje: areaData.PORCENTAJE || 0, 
+          scrapKgs: areaData.SCRAP_KGS || 0, 
+          produccionKgs: areaData.PRODUCCION_KGS || 0 
+        };
+      }
+
+      this.kpiLoadingStates.mangasArea = false;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading mangas area data:', error);
+      this.kpiLoadingStates.mangasArea = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  // Cargar datos de Área Doypack (KPI 7)
+  private async loadDoypackAreaData(): Promise<void> {
+    try {
+      const areaData = await this.dashboardService.getTotalAreas(4).toPromise();
+      
+      if (areaData) {
+        this._areaData.doypack = { 
+          porcentaje: areaData.PORCENTAJE || 0, 
+          scrapKgs: areaData.SCRAP_KGS || 0, 
+          produccionKgs: areaData.PRODUCCION_KGS || 0 
+        };
+      }
+
+      this.kpiLoadingStates.doypackArea = false;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading doypack area data:', error);
+      this.kpiLoadingStates.doypackArea = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  // Cargar datos de Área Tabaco (KPI 8)
+  private async loadTabacoAreaData(): Promise<void> {
+    try {
+      const areaData = await this.dashboardService.getTotalAreas(5).toPromise();
+      
+      if (areaData) {
+        this._areaData.tabaco = { 
+          porcentaje: areaData.PORCENTAJE || 0, 
+          scrapKgs: areaData.SCRAP_KGS || 0, 
+          produccionKgs: areaData.PRODUCCION_KGS || 0 
+        };
+      }
+
+      this.kpiLoadingStates.tabacoArea = false;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading tabaco area data:', error);
+      this.kpiLoadingStates.tabacoArea = false;
+      this.cdr.markForCheck();
+    }
+  }
+
+  // Cargar datos de Área Laminado (KPI 9)
+  private async loadLaminadoAreaData(): Promise<void> {
+    try {
+      const areaData = await this.dashboardService.getTotalAreas(6).toPromise();
+      
+      if (areaData) {
+        this._areaData.laminado = { 
+          porcentaje: areaData.PORCENTAJE || 0, 
+          scrapKgs: areaData.SCRAP_KGS || 0, 
+          produccionKgs: areaData.PRODUCCION_KGS || 0 
+        };
+      }
+
+      this.kpiLoadingStates.laminadoArea = false;
+      this.cdr.markForCheck();
+    } catch (error) {
+      console.error('Error loading laminado area data:', error);
+      this.kpiLoadingStates.laminadoArea = false;
       this.cdr.markForCheck();
     }
   }
