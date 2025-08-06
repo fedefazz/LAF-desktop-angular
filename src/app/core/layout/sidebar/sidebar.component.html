@@ -1,0 +1,98 @@
+<nav class="sidebar" [class.sidebar-closed]="!isOpen()">
+  <div class="sidebar-content">
+    <!-- Navigation Header -->
+    <div class="sidebar-header">
+      <h3 class="sidebar-title">LAF Desktop</h3>
+      <button 
+        mat-icon-button 
+        class="close-button"
+        (click)="closeSidebar()"
+        matTooltip="Cerrar menú"
+        aria-label="Close sidebar">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <!-- Navigation Menu -->
+    <mat-nav-list class="nav-list">
+      @for (item of menuItems(); track item.id) {
+        <div class="nav-item-container">
+          <!-- Main navigation item -->
+          <mat-list-item 
+            class="nav-item"
+            [class.nav-item-active]="isItemActive(item)"
+            [class.nav-item-expanded]="isExpanded(item.id)"
+            (click)="navigateToItem(item)"
+            [attr.aria-expanded]="item.children ? isExpanded(item.id) : null">
+            
+            <mat-icon matListItemIcon class="nav-icon">{{ item.icon }}</mat-icon>
+            
+            <span matListItemTitle class="nav-label">{{ item.label }}</span>
+            
+            <!-- Badge -->
+            @if (item.badge) {
+              <span 
+                class="nav-badge"
+                [attr.data-color]="item.badge.color">
+                {{ item.badge.text }}
+              </span>
+            }
+            
+            <!-- Expansion arrow for items with children -->
+            @if (item.children && item.children.length > 0) {
+              <mat-icon 
+                matListItemMeta 
+                class="expansion-arrow"
+                [class.expanded]="isExpanded(item.id)">
+                expand_more
+              </mat-icon>
+            }
+          </mat-list-item>
+
+          <!-- Sub-navigation items -->
+          @if (item.children && item.children.length > 0) {
+            <div 
+              class="sub-nav-container"
+              [class.sub-nav-expanded]="isExpanded(item.id)">
+              
+              @for (child of item.children; track child.id) {
+                <mat-list-item 
+                  class="sub-nav-item"
+                  [class.sub-nav-item-active]="isItemActive(child)"
+                  (click)="navigateToItem(child)">
+                  
+                  <mat-icon matListItemIcon class="sub-nav-icon">{{ child.icon }}</mat-icon>
+                  
+                  <span matListItemTitle class="sub-nav-label">{{ child.label }}</span>
+                  
+                  <!-- Badge for child items -->
+                  @if (child.badge) {
+                    <span 
+                      class="nav-badge"
+                      [attr.data-color]="child.badge.color">
+                      {{ child.badge.text }}
+                    </span>
+                  }
+                </mat-list-item>
+              }
+            </div>
+          }
+        </div>
+      }
+    </mat-nav-list>
+
+    <!-- Footer -->
+    <div class="sidebar-footer">
+      <mat-divider></mat-divider>
+      <div class="footer-content">
+        <span class="footer-text">LAF Desktop v1.0</span>
+        <span class="footer-subtext">Bolsapel Industrial</span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Overlay for mobile -->
+@if (isOpen()) {
+  <div class="sidebar-overlay" (click)="closeSidebar()"></div>
+}

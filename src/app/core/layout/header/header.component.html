@@ -1,0 +1,135 @@
+<mat-toolbar class="header-toolbar" color="primary">
+  <!-- Left section: Menu toggle and Logo -->
+  <div class="header-left">
+    <button 
+      mat-icon-button 
+      (click)="toggleSidebar()" 
+      matTooltip="Toggle menu"
+      aria-label="Toggle navigation menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    
+    <div class="logo-container">
+      <!-- Logo horizontal personalizado -->
+      <img 
+        src="{{ logoPath }}" 
+        alt="Bolsapel" 
+        class="logo-horizontal-img"
+        height="40">
+    </div>
+  </div>
+
+  <!-- Spacer -->
+  <span class="spacer"></span>
+
+  <!-- Center section: Search -->
+  <div class="header-center">
+    <button 
+      mat-stroked-button 
+      class="search-trigger"
+      (click)="openSearch()"
+      matTooltip="Buscar (Ctrl+K)">
+      <mat-icon>search</mat-icon>
+      <span class="search-text">Buscar...</span>
+      <span class="search-shortcut">Ctrl+K</span>
+    </button>
+  </div>
+
+  <!-- Spacer -->
+  <span class="spacer"></span>
+
+  <!-- Right section: Theme toggle, Notifications and User menu -->
+  <div class="header-right">
+    <!-- Theme Toggle -->
+    <button 
+      mat-icon-button 
+      (click)="toggleTheme()"
+      [matTooltip]="isDarkTheme() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'"
+      aria-label="Toggle theme">
+      <mat-icon>{{ isDarkTheme() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    </button>
+
+    <!-- Notifications Panel -->
+    <!-- TODO: Uncomment when notifications are ready -->
+    <!-- <app-notification-panel></app-notification-panel> -->
+
+    <!-- User menu -->
+    <button 
+      mat-button 
+      [matMenuTriggerFor]="userMenu"
+      class="user-button"
+      aria-label="User menu">
+      
+      <div class="user-info">
+        @if (user()?.avatar && !isDefaultAvatar(user()!.avatar)) {
+          <img 
+            [src]="user()!.avatar" 
+            [alt]="user()!.fullName"
+            class="user-avatar"
+            [style.display]="avatarError() ? 'none' : 'block'"
+            (error)="onAvatarError($event)" />
+        }
+        @if (isDefaultAvatar(user()?.avatar)) {
+          <div class="user-avatar-placeholder">
+            {{ user()?.firstName?.charAt(0) || '' }}{{ user()?.lastName?.charAt(0) || '' }}
+          </div>
+        }
+        
+        <div class="user-details">
+          <span class="user-name">{{ user()?.fullName }}</span>
+          <span class="user-role">{{ user()?.role }}</span>
+        </div>
+        
+        <mat-icon class="dropdown-icon">arrow_drop_down</mat-icon>
+      </div>
+    </button>
+
+    <!-- User dropdown menu -->
+    <mat-menu #userMenu="matMenu" class="user-menu">
+      <div class="menu-header">
+        <div class="menu-user-info">
+          @if (user()?.avatar && !isDefaultAvatar(user()!.avatar)) {
+            <img 
+              [src]="user()!.avatar" 
+              [alt]="user()!.fullName"
+              class="menu-user-avatar"
+              [style.display]="avatarError() ? 'none' : 'block'"
+              (error)="onAvatarError($event)" />
+          }
+          @if (isDefaultAvatar(user()?.avatar)) {
+            <div class="menu-user-avatar-placeholder">
+              {{ user()?.firstName?.charAt(0) || '' }}{{ user()?.lastName?.charAt(0) || '' }}
+            </div>
+          }
+          
+          <div class="menu-user-details">
+            <div class="menu-user-name">{{ user()?.fullName }}</div>
+            <div class="menu-user-email">{{ user()?.email }}</div>
+          </div>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item (click)="onProfileClick()">
+        <mat-icon>person</mat-icon>
+        <span>Mi Perfil</span>
+      </button>
+
+      <button mat-menu-item (click)="onSettingsClick()">
+        <mat-icon>settings</mat-icon>
+        <span>Configuración</span>
+      </button>
+
+      <mat-divider></mat-divider>
+
+      <button mat-menu-item (click)="onLogout()" class="logout-item">
+        <mat-icon>logout</mat-icon>
+        <span>Cerrar Sesión</span>
+      </button>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<!-- Global Search Component -->
+<app-global-search></app-global-search>

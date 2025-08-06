@@ -1,0 +1,35 @@
+<!-- Loading state - shows nothing until initialized -->
+@if (!shouldShowContent()) {
+  <div class="loading-container">
+    <!-- Could add a spinner here if needed -->
+  </div>
+}
+
+<!-- Auth layout (login/register) - no header/sidebar -->
+@if (shouldShowAuthLayout()) {
+  <div class="auth-layout">
+    <router-outlet></router-outlet>
+  </div>
+}
+
+<!-- Main application layout - with header/sidebar -->
+@if (shouldShowMainLayout()) {
+  <div class="main-layout">
+    <!-- Header -->
+    <app-header></app-header>
+
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Main content area -->
+    <main 
+      class="content-area"
+      [class.content-area-shifted]="isSidebarOpen()">
+      
+      <div class="content-container">
+        <!-- Router outlet for page content -->
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+}
