@@ -282,27 +282,27 @@ import { ArgentinianNumberPipe } from '../../shared/pipes/argentinian-number.pip
             </div>
           </div>
 
-          <!-- Gráfico 3: Total scrap planta -->
-          <div class="chart-section-full">
-            <h4 class="chart-title">Total scrap planta</h4>
-            <p class="chart-subtitle">Incidencias de los últimos 12 meses</p>
-            <div class="chart-container-full">
-              <app-chart 
-                [chartData]="totalScrapData"
-                [options]="areaChartOptions"
-                chartType="line">
-              </app-chart>
-            </div>
-          </div>
-
-          <!-- Gráfico 4: Porcentaje mensual de scrap planta -->
+          <!-- Gráfico 3: Porcentaje mensual de scrap planta -->
           <div class="chart-section-full">
             <h4 class="chart-title">Porcentaje mensual de scrap planta</h4>
             <p class="chart-subtitle">Incidencias de los últimos 12 meses</p>
             <div class="chart-container-full">
               <app-chart 
                 [chartData]="monthlyScrapData"
-                [options]="areaChartOptions"
+                [options]="monthlyScrapChartOptionsFormatted"
+                chartType="line">
+              </app-chart>
+            </div>
+          </div>
+
+          <!-- Gráfico 4: Total scrap planta -->
+          <div class="chart-section-full">
+            <h4 class="chart-title">Total scrap planta</h4>
+            <p class="chart-subtitle">Incidencias de los últimos 12 meses</p>
+            <div class="chart-container-full">
+              <app-chart 
+                [chartData]="totalScrapData"
+                [options]="totalScrapChartOptionsFormatted"
                 chartType="line">
               </app-chart>
             </div>
@@ -814,6 +814,44 @@ export class DashboardComponent implements OnInit {
     }
   };
 
+  // Formatted chart options for Monthly Scrap (con eje X dinámico)
+  public readonly monthlyScrapChartOptionsFormatted = {
+    ...this.areaChartOptions,
+    scales: {
+      ...this.areaChartOptions.scales,
+      x: {
+        ...this.areaChartOptions.scales.x,
+        ticks: { 
+          color: 'rgba(255,255,255,0.6)', 
+          font: { size: 11 },
+          callback: (value: any, index: any, values: any) => {
+            const label = this.monthlyScrapData.labels?.[index];
+            return this.formatMonthLabelForDisplay(label as string);
+          }
+        }
+      }
+    }
+  };
+
+  // Formatted chart options for Total Scrap (con eje X dinámico)
+  public readonly totalScrapChartOptionsFormatted = {
+    ...this.areaChartOptions,
+    scales: {
+      ...this.areaChartOptions.scales,
+      x: {
+        ...this.areaChartOptions.scales.x,
+        ticks: { 
+          color: 'rgba(255,255,255,0.6)', 
+          font: { size: 11 },
+          callback: (value: any, index: any, values: any) => {
+            const label = this.totalScrapData.labels?.[index];
+            return this.formatMonthLabelForDisplay(label as string);
+          }
+        }
+      }
+    }
+  };
+
   // Helper for Argentinian number formatting (consistente con el pipe)
   private formatArgentinian(value: number): string {
     if (typeof value !== 'number' || isNaN(value)) return '0';
@@ -1218,7 +1256,42 @@ export class DashboardComponent implements OnInit {
       };
     }
 
-    // Otros gráficos con datos reales del API (no datos estáticos)
-    // totalScrapData y monthlyScrapData se poblarán con datos reales cuando estén disponibles
+    // Porcentaje mensual de scrap planta usando getIndicadoresTotalesOp
+    const indicadoresTotalesOp = (stats as any)?.raw?.getIndicadoresTotalesOp;
+    if (indicadoresTotalesOp && Array.isArray(indicadoresTotalesOp)) {
+      this.monthlyScrapData = {
+        labels: indicadoresTotalesOp.map(d => this.formatMonthLabel(d.DTPRODUCAO)),
+        datasets: [
+          this.createDatasetWithPointColors(
+            'Porcentaje Scrap',
+            indicadoresTotalesOp.map(d => d.Todas || 0),
+            'rgba(255, 193, 7, 1)',
+            'rgba(255, 193, 7, 0.2)'
+          )
+        ]
+      };
+    }
+
+    // Total scrap planta usando getIndicadoresTotalScrap
+    const indicadoresTotalScrap = (stats as any)?.raw?.getIndicadoresTotalScrap;
+    if (indicadoresTotalScrap && Array.isArray(indicadoresTotalScrap)) {
+      this.totalScrapData = {
+        labels: indicadoresTotalScrap.map(d => this.formatMonthLabel(d.DTPRODUCAO)),
+        datasets: [
+          this.createDatasetWithPointColors(
+            'Scrap',
+            indicadoresTotalScrap.map(d => d.SCRAP || 0),
+            'rgba(220, 53, 69, 1)',
+            'rgba(220, 53, 69, 0.2)'
+          ),
+          this.createDatasetWithPointColors(
+            'Producción',
+            indicadoresTotalScrap.map(d => d.PRODUCCION_KGS || 0),
+            'rgba(25, 135, 84, 1)',
+            'rgba(25, 135, 84, 0.2)'
+          )
+        ]
+      };
+    }
   }
 }
