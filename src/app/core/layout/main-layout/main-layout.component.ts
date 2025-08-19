@@ -30,10 +30,21 @@ export class MainLayoutComponent {
   readonly isInitialized = this.authService.isInitialized;
   readonly isAuthenticated = this.authService.isAuthenticated;
 
+  // Debug: log signals and route on every render
+  logLayoutState(context: string) {
+    // eslint-disable-next-line no-console
+    console.log('[MainLayout][DEBUG]', context, {
+      initialized: this.isInitialized(),
+      authenticated: this.isAuthenticated(),
+      currentUrl: this.router.url,
+      isAuthRoute: this.isAuthRoute(),
+    });
+  }
+
   // Computed property to determine if we should show content
   readonly shouldShowContent = computed(() => {
     const initialized = this.isInitialized();
-    console.log('[MainLayout] shouldShowContent:', initialized);
+    this.logLayoutState('shouldShowContent');
     return initialized;
   });
 
@@ -43,15 +54,7 @@ export class MainLayoutComponent {
     const authenticated = this.isAuthenticated();
     const isAuth = this.isAuthRoute();
     const result = initialized && authenticated && !isAuth;
-    
-    console.log('[MainLayout] shouldShowMainLayout:', {
-      initialized,
-      authenticated,
-      isAuthRoute: isAuth,
-      currentUrl: this.router.url,
-      result
-    });
-    
+    this.logLayoutState('shouldShowMainLayout');
     return result;
   });
 
@@ -60,15 +63,7 @@ export class MainLayoutComponent {
     const authenticated = this.isAuthenticated();
     const isAuth = this.isAuthRoute();
     const result = initialized && (isAuth || !authenticated);
-    
-    console.log('[MainLayout] shouldShowAuthLayout:', {
-      initialized,
-      authenticated,
-      isAuthRoute: isAuth,
-      currentUrl: this.router.url,
-      result
-    });
-    
+    this.logLayoutState('shouldShowAuthLayout');
     return result;
   });
 

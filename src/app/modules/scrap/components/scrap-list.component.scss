@@ -1,0 +1,716 @@
+// Modal Dialog Enhancement: aplica estilos al modal visible
+::ng-deep .cdk-overlay-pane.scrap-edit-dialog-container .mat-mdc-dialog-container {
+  max-width: 850px !important;
+  min-width: 600px !important;
+  width: 90vw !important;
+  margin: 32px auto !important;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.18), 0 1.5px 6px rgba(0,0,0,0.08);
+  border-radius: 20px !important;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 100%) !important;
+  z-index: 9999 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  border: none !important;
+  overflow-x: hidden !important;
+}
+
+::ng-deep  .mat-mdc-dialog-surface {
+    overflow-x: hidden !important;
+        border-radius: unset !important;
+}
+
+
+::ng-deep  .scrap-edit-dialog  {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-evenly; */
+    height: 100%;
+}
+
+
+.scrap-container {
+  padding: 20px;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  .page-header {
+// ...existing code...
+    margin-bottom: 30px;
+    background-color: #1976d2; // Azul de Bolsapel
+    border-radius: 8px;
+    padding: 20px 30px;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+    .header-content {
+// ...existing code...
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      .page-title {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin: 0;
+        color: white;
+        font-size: 2.2rem;
+        font-weight: 400;
+
+        .page-icon {
+          font-size: 2.2rem;
+          width: 2.2rem;
+          height: 2.2rem;
+          color: #ffffff;
+        }
+      }
+
+      .header-actions {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+
+        button {
+          border-radius: 6px;
+          padding: 12px 24px;
+          font-weight: 500;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+          transition: all 0.2s ease;
+
+          &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+          }
+
+          &.delete-button {
+            background-color: #d32f2f !important;
+            color: white !important;
+            
+            &:hover {
+              background-color: #c62828 !important;
+            }
+            
+            &:disabled {
+              opacity: 0.6;
+              transform: none;
+              box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+              background-color: #d32f2f !important;
+              color: white !important;
+            }
+
+            mat-icon {
+              color: white !important;
+                  font-size: 22px;
+    position: relative;
+    top: -2px;
+    left: -2px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .filters-section {
+    margin-bottom: 30px;
+
+    .filters-card {
+      background-color: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+
+      mat-card-content {
+        padding: 25px 30px;
+      }
+
+      .filters-row {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+        flex-wrap: wrap;
+
+        .search-field {
+          flex: 1;
+          min-width: 300px;
+        }
+
+        mat-form-field {
+          min-width: 180px;
+          
+          .mat-mdc-text-field-wrapper {
+            border-radius: 6px;
+          }
+        }
+
+        button {
+          border-radius: 6px;
+          padding: 14px 28px;
+          font-weight: 500;
+          background-color: #1976d2;
+          color: white;
+          box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2);
+          transition: all 0.2s ease;
+          height: 56px; // Match the height of form fields
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          mat-icon {
+            color: white !important;
+          }
+
+          &:hover {
+            background-color: #1565c0;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+          }
+
+          &.mat-warn {
+            background-color: #f57c00;
+            box-shadow: 0 2px 4px rgba(245, 124, 0, 0.2);
+
+            &:hover {
+              background-color: #ef6c00;
+              box-shadow: 0 4px 8px rgba(245, 124, 0, 0.3);
+            }
+
+            &:disabled {
+              background-color: #cccccc;
+              color: #666666;
+              transform: none;
+              box-shadow: none;
+
+              mat-icon {
+                color: #666666 !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .table-container {
+    .table-content {
+      padding: 0;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border: 1px solid #e0e0e0;
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 80px 40px;
+        gap: 25px;
+        min-height: 400px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        margin: 20px;
+
+        mat-spinner {
+          transform: scale(1.2);
+        }
+
+        .loading-text {
+          color: #1976d2;
+          font-size: 18px;
+          font-weight: 500;
+          text-align: center;
+        }
+      }
+
+      .table-wrapper {
+        overflow-x: auto;
+        max-height: 75vh;
+
+        .scrap-table {
+          width: 100%;
+          background-color: white;
+
+          .mat-mdc-header-row {
+            background-color: #1976d2; // Azul de Bolsapel sin degradado
+            border: none;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+
+            .mat-mdc-header-cell {
+              color: white;
+              font-weight: 600;
+              font-size: 13px;
+              text-transform: uppercase;
+              letter-spacing: 0.5px;
+              border-right: 1px solid rgba(255,255,255,0.2);
+              padding: 18px 16px;
+
+              &:last-child {
+                border-right: none;
+              }
+            }
+          }
+
+          .data-row {
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #e0e0e0;
+
+            &:hover {
+              background-color: #f5f5f5;
+            }
+
+            &.selected-row {
+              background-color: #e3f2fd;
+              border-left: 4px solid #1976d2;
+            }
+
+            &:nth-child(even):not(.selected-row):not(:hover) {
+              background-color: #fafafa;
+            }
+
+            .mat-mdc-cell {
+              border-right: 1px solid #f0f0f0;
+              padding: 16px;
+              color: #424242;
+              font-size: 14px;
+              vertical-align: middle;
+
+              &:last-child {
+                border-right: none;
+              }
+
+              // Se elimina formato especial para columnas Peso y Comentarios
+
+              &.actions-cell {
+                text-align: center;
+                width: 120px;
+                
+                button {
+                  border-radius: 50%;
+                  width: 36px;
+                  height: 36px;
+                  margin: 0 2px;
+                  transition: all 0.2s ease;
+                  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+                  &.mat-mdc-icon-button.mat-primary {
+                    background-color: #1976d2;
+                    color: white !important;
+
+                    mat-icon {
+                      color: white !important;
+                        color: white !important;
+                  font-size: 22px;
+    position: relative;
+    top: -1px;
+    left: -2px;
+                    }
+
+                    &:hover {
+                      background-color: #1565c0;
+                      transform: scale(1.05);
+                      box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+                    }
+                  }
+
+                  &.mat-mdc-icon-button.mat-warn {
+                    background-color: #d32f2f;
+                    color: white !important;
+
+                    mat-icon {
+                      color: white !important;
+                  font-size: 22px;
+    position: relative;
+    top: 0px;
+    left: -2px;
+                    }
+
+                    &:hover {
+                      background-color: #c62828;
+                      transform: scale(1.05);
+                      box-shadow: 0 4px 8px rgba(211, 47, 47, 0.3);
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          .no-data-cell {
+            text-align: center;
+            padding: 60px 30px;
+
+            .no-data-message {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              gap: 15px;
+              color: #666;
+
+              .no-data-icon {
+                font-size: 64px;
+                width: 64px;
+                height: 64px;
+                opacity: 0.3;
+                color: #1976d2;
+              }
+
+              span {
+                font-size: 18px;
+                font-weight: 400;
+              }
+
+              small {
+                font-size: 14px;
+                opacity: 0.7;
+              }
+            }
+          }
+        }
+      }
+
+      mat-paginator {
+        border: none;
+        background-color: #f8f9fa;
+        border-top: 1px solid #e0e0e0;
+        
+        .mat-mdc-paginator-range-label {
+          color: #1976d2;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+// Checkbox custom styling
+::ng-deep .mat-mdc-checkbox {
+  .mdc-checkbox__native-control:enabled:checked ~ .mdc-checkbox__background {
+    background-color: #1976d2 !important;
+    border-color: #1976d2 !important;
+  }
+}
+
+// Form field styling
+::ng-deep .mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    background-color: white;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    border: 1px solid #e0e0e0;
+
+    &:hover {
+      border-color: #1976d2;
+      box-shadow: 0 2px 4px rgba(25, 118, 210, 0.1);
+    }
+  }
+
+  &.mat-focused .mat-mdc-text-field-wrapper {
+    border-color: #1976d2;
+    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.2);
+  }
+}
+
+// Button enhancements
+::ng-deep .mat-mdc-raised-button {
+  transition: all 0.2s ease;
+  
+  &:not(:disabled):hover {
+    transform: translateY(-1px);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .scrap-container {
+    padding: 15px;
+
+    .page-header {
+      padding: 20px;
+      border-radius: 6px;
+      
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+
+        .page-title {
+          font-size: 1.8rem;
+        }
+
+        .header-actions {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+
+    .filters-section .filters-card .filters-row {
+      flex-direction: column;
+      align-items: stretch;
+
+      .search-field,
+      mat-form-field {
+        min-width: unset;
+        width: 100%;
+      }
+    }
+
+    .table-container .table-content .table-wrapper {
+      font-size: 12px;
+
+      .scrap-table {
+        min-width: 900px;
+        
+        .mat-mdc-header-cell,
+        .mat-mdc-cell {
+          padding: 12px 8px;
+        }
+      }
+    }
+  }
+}
+
+// Dark theme support
+:host-context(body.dark-theme) {
+  .scrap-container {
+    background-color: #2d3748;
+
+    .page-header {
+      background-color: #1976d2;
+
+      .delete-button {
+        background-color: #d32f2f !important;
+        color: white !important;
+
+        mat-icon {
+          color: white !important;
+        }
+
+        &:hover {
+          background-color: #c62828 !important;
+        }
+
+        &:disabled {
+          background-color: #d32f2f !important;
+          color: white !important;
+        }
+      }
+    }
+
+    .filters-card,
+    .table-content {
+      background-color: #4a5568 !important;
+      color: #e2e8f0;
+      border-color: #4a5568;
+    }
+
+    .data-row {
+      &:hover {
+        background-color: #2d3748 !important;
+      }
+
+      &:nth-child(even):not(.selected-row):not(:hover) {
+        background-color: rgba(45, 55, 72, 0.3) !important;
+      }
+
+      .mat-mdc-cell {
+        color: #e2e8f0;
+        border-color: rgba(255, 255, 255, 0.1);
+
+        &.numeric-cell {
+          color: #90cdf4;
+        }
+
+        &.actions-cell button {
+          &.mat-primary {
+            background-color: #1976d2 !important;
+            color: white !important;
+
+            mat-icon {
+              color: white !important;
+            }
+
+            &:hover {
+              background-color: #1565c0 !important;
+            }
+          }
+
+          &.mat-warn {
+            background-color: #d32f2f !important;
+            color: white !important;
+
+            mat-icon {
+              color: white !important;
+            }
+
+            &:hover {
+              background-color: #c62828 !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .scrap-container {
+    background-color: white !important;
+    
+    .page-header .header-actions,
+    .filters-section,
+    mat-paginator {
+      display: none !important;
+    }
+
+    .table-container .table-content .table-wrapper {
+      max-height: none !important;
+      overflow: visible !important;
+
+      .scrap-table {
+        .data-row:hover {
+          background-color: transparent !important;
+          transform: none !important;
+        }
+      }
+    }
+  }
+}
+
+// Modal Dialog Enhancement
+::ng-deep .mat-mdc-dialog-container.scrap-edit-dialog-container {
+  max-width: 950px !important;
+  min-width: 700px !important;
+  width: 95vw !important;
+  margin: 0 auto !important;
+  box-shadow: 0 12px 48px rgba(25, 118, 210, 0.28), 0 2px 12px rgba(0,0,0,0.18);
+  border-radius: 24px !important;
+  background: linear-gradient(135deg, #e3f2fd 0%, #f8f9fa 100%) !important;
+  border: 4px solid #1976d2 !important;
+  outline: 4px solid #1565c0 !important;
+  overflow: visible !important;
+  z-index: 9999 !important;
+}
+
+::ng-deep .cdk-overlay-pane.scrap-edit-dialog-container .mat-mdc-dialog-content {
+  padding: 32px 32px 8px 32px !important;
+  overflow: visible !important;
+  max-height: 65vh !important;
+  box-sizing: border-box;
+  background: transparent !important;
+  border-radius: 0 0 0 0 !important;
+  min-width: 0 !important;
+  width: 100% !important;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+
+
+
+::ng-deep .cdk-overlay-pane.scrap-edit-dialog-container .mat-mdc-dialog-actions {
+  padding: 20px 32px 24px 32px !important;
+  justify-content: flex-end !important;
+  gap: 18px !important;
+  border-top: 2px solid #e0e0e0 !important;
+  background: transparent !important;
+  border-radius: 0 0 20px 20px !important;
+  box-shadow: 0 -2px 8px rgba(25, 118, 210, 0.04);
+}
+
+
+
+.scrap-form {
+  width: 100%;
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-bottom: 28px;
+    align-items: end;
+    &.single-column {
+      grid-template-columns: 1fr;
+    }
+    &.three-columns {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+    .form-field {
+      min-width: 0;
+      padding-bottom: 4px;
+      &.full-width {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+  mat-form-field {
+    width: 100%;
+    .mat-mdc-text-field-wrapper {
+      border-radius: 10px;
+      min-height: 56px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(25, 118, 210, 0.07);
+    }
+    .mat-mdc-form-field-wrapper {
+      min-height: 70px;
+    }
+    &.mat-form-field-appearance-outline {
+      .mat-mdc-form-field-flex {
+        min-height: 56px;
+      }
+    }
+    .mat-mdc-form-field-infix {
+      padding: 10px 0;
+    }
+  }
+  textarea.mat-mdc-input-element {
+    min-height: 80px;
+    font-size: 1rem;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fff;
+  }
+}
+.dialog-header {
+  padding: 24px 32px 0 32px !important;
+  background: linear-gradient(135deg, #1976d2, #1565c0);
+  color: white;
+  border-radius: 20px 20px 0 0 !important;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .title-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin: 0;
+    }
+    .title-icon {
+      font-size: 2rem;
+    }
+  }
+  .close-button {
+    color: white;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+    &:hover {
+      background: rgba(255,255,255,0.18);
+    }
+  }
+}
