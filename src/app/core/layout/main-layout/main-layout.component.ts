@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -24,6 +24,9 @@ export class MainLayoutComponent {
   private readonly navigationService = inject(NavigationService);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+
+  // Crear un signal para la URL actual
+  private readonly currentUrl = signal<string>(this.router.url);
 
   // Computed properties
   readonly isSidebarOpen = this.navigationService.isSidebarOpen;
@@ -52,31 +55,46 @@ export class MainLayoutComponent {
   readonly shouldShowMainLayout = computed(() => {
     const initialized = this.isInitialized();
     const authenticated = this.isAuthenticated();
-    const isAuth = this.isAuthRoute();
+    const currentUrl = this.currentUrl();
+    const isAuth = currentUrl.startsWith('/auth');
     const result = initialized && authenticated && !isAuth;
-    this.logLayoutState('shouldShowMainLayout');
+    
+    console.log('[MainLayout] shouldShowMainLayout:', {
+      initialized,
+      authenticated, 
+      currentUrl,
+      isAuth,
+      result
+    });
+    
     return result;
   });
 
   readonly shouldShowAuthLayout = computed(() => {
     const initialized = this.isInitialized();
     const authenticated = this.isAuthenticated();
-    const isAuth = this.isAuthRoute();
+    const currentUrl = this.currentUrl();
+    const isAuth = currentUrl.startsWith('/auth');
     const result = initialized && (isAuth || !authenticated);
-    this.logLayoutState('shouldShowAuthLayout');
+    
+    console.log('[MainLayout] shouldShowAuthLayout:', {
+      initialized,
+      authenticated,
+      currentUrl, 
+      isAuth,
+      result
+    });
+    
     return result;
   });
 
   constructor() {
-    // Force re-evaluation of computed properties on route changes
+    // Actualizar el signal de URL cuando cambie la ruta
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
-      console.log('[MainLayout] Route changed to:', this.router.url);
-      // Force change detection to re-evaluate computed properties
-      setTimeout(() => {
-        console.log('[MainLayout] Re-evaluating layout after route change');
-      }, 0);
+    ).subscribe((event: NavigationEnd) => {
+      console.log('[MainLayout] Route changed to:', event.url);
+      this.currentUrl.set(event.url);
     });
   }
 

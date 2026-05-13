@@ -1,0 +1,222 @@
+.actividad-edit-dialog {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  max-height: 90vh;
+  font-family: 'Roboto', sans-serif;
+
+  .dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #1976d2, #1565c0);
+    color: white;
+    border-radius: 0;
+    margin: 0;
+
+    .title-content {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .title-icon {
+        font-size: 1.8rem;
+        width: 1.8rem;
+        height: 1.8rem;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+    }
+
+    .close-button {
+      color: white;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        transform: rotate(90deg);
+      }
+
+      mat-icon {
+        color: white;
+      }
+    }
+  }
+
+  .dialog-content {
+    padding: 24px;
+    overflow: visible;
+    min-height: 120px;
+
+    .actividad-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      .full-width {
+        width: 100%;
+      }
+
+      mat-form-field {
+        width: 100%;
+
+        .mat-mdc-text-field-wrapper {
+          border-radius: 6px;
+        }
+
+        mat-label {
+          font-weight: 500;
+          color: #424242;
+        }
+
+        input {
+          font-size: 1rem;
+        }
+
+        mat-hint {
+          font-size: 0.85rem;
+          color: #666;
+        }
+
+        mat-error {
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 16px 24px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #f5f7fa;
+    margin: 0;
+    border-radius: 0;
+
+    button {
+      border-radius: 6px;
+      padding: 10px 24px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+
+      mat-icon {
+        font-size: 1.2rem;
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+
+      &:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+      }
+
+      &.cancel-button {
+        color: #666;
+        background-color: white;
+        border: 1px solid #ddd;
+
+        &:hover {
+          background-color: #f5f5f5;
+          border-color: #999;
+        }
+      }
+
+      &.save-button {
+        background-color: #1976d2;
+        color: white;
+        box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2);
+
+        &:hover:not(:disabled) {
+          background-color: #1565c0;
+          box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          transform: none;
+          box-shadow: none;
+        }
+
+        mat-icon {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+// Dialog container overrides
+::ng-deep .mat-mdc-dialog-container {
+  padding: 0 !important;
+}
+
+::ng-deep .mat-mdc-dialog-surface {
+  border-radius: 8px !important;
+}
+
+// Animation for dialog
+::ng-deep .cdk-overlay-pane {
+  animation: dialogSlideIn 0.3s cubic-bezier(0.35, 0, 0.25, 1);
+}
+
+@keyframes dialogSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+// Responsive Design
+@media (max-width: 600px) {
+  .actividad-edit-dialog {
+    .dialog-header {
+      padding: 16px 20px;
+
+      .title-content {
+        h2 {
+          font-size: 1.2rem;
+        }
+
+        .title-icon {
+          font-size: 1.5rem;
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+      }
+    }
+
+    .dialog-content {
+      padding: 20px;
+    }
+
+    .dialog-actions {
+      padding: 16px 20px;
+
+      button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}

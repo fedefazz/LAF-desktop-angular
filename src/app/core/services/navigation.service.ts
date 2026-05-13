@@ -119,7 +119,7 @@ export class NavigationService {
           id: 'material-types',
           label: 'Tipo de Material',
           icon: 'category',
-          route: '/tipo-material',
+          route: '/material-types',
           roles: [UserRole.ADMIN]
         },
         {
@@ -132,7 +132,7 @@ export class NavigationService {
         {
           id: 'activities',
           label: 'Actividades',
-          icon: 'assignment',
+          icon: 'settings',
           route: '/actividades',
           roles: [UserRole.ADMIN]
         }
@@ -211,8 +211,10 @@ export class NavigationService {
   readonly filteredMenuItems = computed<NavigationItem[]>(() => {
     // Usar el UserService para verificar roles
     if (!this.userService.loggedIn()) return [];
+    
+    console.log('User roles:', this.userService.getUserRoles());
 
-    return this.menuItems
+    const items = this.menuItems
       .filter(item => this.userService.hasAnyRole(item.roles))
       .map(item => ({
         ...item,
@@ -229,6 +231,9 @@ export class NavigationService {
         }
         return true;
       });
+    
+    console.log('Filtered menu items:', items);
+    return items;
   });
 
   constructor() {

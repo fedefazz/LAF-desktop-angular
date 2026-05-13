@@ -43,6 +43,34 @@ Se han añadido exitosamente los módulos de negocio específicos de LAF (Lamina
 - Tintas (Flexográficas)
 - Solventes (Acetato de etilo)
 
+### 3. Gestión de Actividades (`/actividades`)
+- **Componente**: `ActividadesListComponent`
+- **Dialog**: `ActividadEditDialogComponent`
+- **Servicio**: `ActividadService`
+- **Funcionalidades**:
+  - Listado completo de actividades del sistema
+  - CRUD completo (Crear, Leer, Actualizar, Eliminar)
+  - Búsqueda en tiempo real por nombre o ID
+  - Confirmación de eliminación con diálogos
+  - Contador de actividades totales
+  - Animaciones fluidas en tabla
+  - Interfaz responsiva
+
+**Datos del sistema**:
+- Catálogo de tipos de actividades de producción
+- Usado por módulos de Scrap y Máquinas
+- Gestión administrativa (solo Admin)
+
+**Flujo de uso**:
+1. Módulo Scrap → selecciona actividad al registrar scrap
+2. Módulo Máquinas → asigna múltiples actividades por máquina
+3. Reportes → filtra por tipo de actividad
+
+**Validaciones**:
+- Descripción obligatoria (máx. 100 caracteres)
+- Verificación antes de eliminar
+- Prevención de duplicados (backend)
+
 ## 🏗️ Arquitectura Implementada
 
 ### Modelos de Negocio
@@ -74,11 +102,18 @@ export interface MaterialType {
   specifications: MaterialSpecifications;
   // ... más campos
 }
+
+export interface ActividadDto {
+  IdActividad: number;
+  Descripcion: string;
+  Habilitado?: boolean;
+}
 ```
 
 ### Servicios
 - **MachineService**: CRUD completo + estadísticas + alertas
 - **MaterialTypeService**: CRUD completo + búsqueda + filtros
+- **ActividadService**: CRUD completo + estado reactivo con RxJS
 
 ### Navegación Actualizada
 - Nueva sección "Producción" con submódulos:
@@ -86,6 +121,11 @@ export interface MaterialType {
   - Scrap Manager
 - Nueva sección "Materiales" con submódulos:
   - Tipos de Material
+- Nueva sección "Equipamiento" con submódulos:
+  - Máquinas
+  - Tipo de Material
+  - Actividades (Admin only)
+  - JobTrack
 
 ## 🎨 UI/UX Implementada
 
@@ -151,11 +191,22 @@ export interface MaterialType {
 
 ## 📊 Métricas de Implementación
 
-- **Componentes creados**: 2 principales
-- **Servicios añadidos**: 2 con funcionalidad completa
-- **Rutas agregadas**: 2 nuevas rutas lazy-loaded
-- **Modelos de datos**: 15+ interfaces y enums
-- **Líneas de código**: ~1500+ líneas
-- **Bundle size**: 766KB (dentro de límites normales para Angular Material)
+- **Componentes creados**: 4 principales (+ 1 dialog)
+- **Servicios añadidos**: 3 con funcionalidad completa
+- **Rutas agregadas**: 3 nuevas rutas lazy-loaded
+- **Modelos de datos**: 18+ interfaces y enums
+- **Líneas de código**: ~2200+ líneas
+- **Bundle size**: Optimizado con lazy loading
 
-El sistema LAF Desktop Angular ahora incluye toda la funcionalidad de negocio específica para la gestión de máquinas y materiales, manteniendo la arquitectura profesional y escalable establecida en la migración inicial.
+### ✅ Estado del Proyecto
+
+#### ✓ Completado
+- [x] Modelos de dominio de negocio
+- [x] Servicios con integración a API backend
+- [x] Componentes UI completos
+- [x] Navegación integrada
+- [x] Rutas configuradas
+- [x] Build exitoso
+- [x] Responsive design
+- [x] Sistema de permisos integrado
+- [x] **Módulo Actividades migrado** (primera migración desde AngularJS)

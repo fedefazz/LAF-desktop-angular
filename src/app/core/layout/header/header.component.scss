@@ -5,8 +5,11 @@
   right: 0;
   z-index: 1000;
   height: 64px;
-  padding: 0 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 0 20px;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   display: flex;
   align-items: center;
 }
@@ -25,13 +28,13 @@
 }
 
 .logo-horizontal-img {
-  height: 160px;
+  height: 36px;
   width: auto;
   object-fit: contain;
   transition: opacity 0.2s ease;
   
   &:hover {
-    opacity: 0.9;
+    opacity: 0.8;
   }
 }
 
@@ -100,11 +103,11 @@
 }
 
 .search-trigger {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
   padding: 8px 16px;
-  border-radius: 24px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -113,27 +116,30 @@
   justify-content: flex-start;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: #e2e8f0;
+    border-color: #cbd5e1;
+    color: #475569;
   }
 
   mat-icon {
-    opacity: 0.7;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
   }
 
   .search-text {
     flex: 1;
     text-align: left;
-    opacity: 0.7;
+    font-size: 13px;
     font-weight: 400;
   }
 
   .search-shortcut {
     font-size: 11px;
-    background: rgba(255, 255, 255, 0.1);
+    background: #e2e8f0;
     padding: 2px 6px;
     border-radius: 4px;
-    opacity: 0.6;
+    font-weight: 500;
   }
 }
 
@@ -199,13 +205,14 @@
 }
 
 .user-name {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
 }
 
 .user-role {
-  font-size: 12px;
-  opacity: 0.7;
+  font-size: 11px;
+  color: #64748b;
 }
 
 .dropdown-icon {

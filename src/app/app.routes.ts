@@ -1,3 +1,4 @@
+// ...existing code...
 import { Routes } from '@angular/router';
 import { authGuard, guestGuard, roleGuard } from './core/guards';
 import { UserRole } from './core/models';
@@ -41,6 +42,18 @@ export const routes: Routes = [
       {
         path: 'scrap',
         loadComponent: () => import('./features/scrap/scrap-manager.component').then(m => m.ScrapManagerComponent)
+      },
+      {
+        path: 'motivos-scrap',
+        loadComponent: () => import('./features/motivos-scrap/motivos-scrap.component').then(m => m.MotivosScrapComponent)
+      },
+      {
+        path: 'actividades',
+        loadComponent: () => import('./features/actividades/actividades-list/actividades-list.component').then(m => m.ActividadesListComponent)
+      },
+      {
+        path: 'origen-scrap',
+        loadComponent: () => import('./features/origen-scrap/origen-scrap-list/origen-scrap-list.component').then(m => m.OrigenScrapListComponent)
       },
       {
         path: 'machines',

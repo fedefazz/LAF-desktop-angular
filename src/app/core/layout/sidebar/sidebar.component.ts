@@ -43,9 +43,11 @@ export class SidebarComponent {
 
   // Methods
   navigateToItem(item: NavigationItem): void {
+    console.log('Navegando a item:', item);
     if (item.children && item.children.length > 0) {
       this.toggleExpansion(item.id);
     } else if (item.route) {
+      console.log('Navegando a ruta:', item.route);
       this.navigationService.navigateToItem(item);
     }
   }
